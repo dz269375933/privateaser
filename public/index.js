@@ -26,6 +26,7 @@ const bars = [{
 //The `price` is updated from step 1 and 2
 //The `commission` is updated from step 3
 //The `options` is useful from step 4
+
 const events = [{
   'id': 'bba9500c-fd9e-453f-abf1-4cd8f52af377',
   'booker': 'esilv-bde',
@@ -145,7 +146,26 @@ const actors = [{
     'amount': 0
   }]
 }];
+function findBar(barId){
+    var tempBar;
+    bars.forEach(function(bar){
+        if(bar.id==barId){
+         tempBar=bar;
+         return;
+        }
+    });
+    return tempBar;
+}
+function init(){
+    events.forEach(function(event){
+        var bar=findBar(event.barId);
+        event.price=bar.pricePerHour*event.time
+            +bar.pricePerPerson*event.persons;
+    });
+}
 
+
+init();
 console.log(bars);
 console.log(events);
 console.log(actors);
