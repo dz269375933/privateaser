@@ -146,12 +146,12 @@ const actors = [{
     'amount': 0
   }]
 }];
-// function getDiscount(persons){
-//   if(persons<10)return 1;
-//   else if(persons<20)return 0.9;
-//   else if(persons<60)return 0.7;
-//   else return 0.5;
-// }
+function getDiscount(persons){
+  if(persons<10)return 1;
+  else if(persons<20)return 0.9;
+  else if(persons<60)return 0.7;
+  else return 0.5;
+}
 function findBar(barId){
     var tempBar;
     bars.forEach(function(bar){
@@ -165,10 +165,8 @@ function findBar(barId){
 function init(){
     events.forEach(function(event){
         var bar=findBar(event.barId);
-        // event.price=(bar.pricePerHour*event.time
-        //     +bar.pricePerPerson*event.persons)*getDiscount(event.persons);
-        event.price=bar.pricePerHour*event.time
-             +bar.pricePerPerson*event.persons;
+        event.price=(bar.pricePerHour*event.time
+            +bar.pricePerPerson*event.persons)*getDiscount(event.persons);
     });
     console.log(events);
 }
