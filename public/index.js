@@ -170,6 +170,12 @@ function calculatePrice(){
         event.commission.insurance=event.price*0.15;
         event.commission.treasury=event.persons;
         event.commission.privateaser=event.price*0.3-event.commission.insurance-event.commission.treasury;
+
+        if(event.options.deductibleReduction){
+            event.price=event.price+event.persons;
+            event.commission.privateaser=event.commission.privateaser+event.persons;
+        }
+
     });
 }
 function init(){
