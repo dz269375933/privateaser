@@ -162,12 +162,18 @@ function findBar(barId){
     });
     return tempBar;
 }
-function init(){
+function calculatePrice(){
     events.forEach(function(event){
         var bar=findBar(event.barId);
         event.price=(bar.pricePerHour*event.time
             +bar.pricePerPerson*event.persons)*getDiscount(event.persons);
+        event.commission.insurance=event.price*0.15;
+        event.commission.treasury=event.persons;
+        event.commission.privateaser=event.price*0.3-event.commission.insurance-event.commission.treasury;
     });
+}
+function init(){
+    calculatePrice();
     console.log(events);
 }
 
