@@ -162,6 +162,16 @@ function findBar(barId){
     });
     return tempBar;
 }
+function findEvent(eventId){
+    var tempEvent;
+    events.forEach(function (event) {
+       if(event.id==eventId){
+           tempEvent=event;
+           return;
+       }
+    });
+    return tempEvent;
+}
 function calculatePrice(){
     events.forEach(function(event){
         var bar=findBar(event.barId);
@@ -178,9 +188,36 @@ function calculatePrice(){
 
     });
 }
+function calculateActor(){
+    actors.forEach(function (actor) {
+       const event=findEvent(actor.eventId);
+       actor.payment.forEach(function (p) {
+          switch (p.who){
+              case "booker":{
+                  p.amount=event.price;
+              }break;
+              case "bar":{
+                  p.amount=event.price-(
+                    event.commission.insurance+event.commission.privateaser+event.commission.treasury
+                  );
+              }break;
+              case "insurance":{
+                  p.amount=event.commission.insurance;
+              }break;
+              case "treasury":{
+                  p.amount=event.commission.treasury;
+              }break;
+              case "privateaser":{
+                  p.amount=event.commission.privateaser;
+              }break;
+          }
+       });
+    });
+}
 function init(){
     calculatePrice();
-    console.log(events);
+    calculateActor();
+    console.log(actors);
 }
 
 
